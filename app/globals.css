@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    /* === BASE COLORS === */
+    --background: 0 0% 7%; /* #121212 */
+    --foreground: 0 0% 94%; /* #E0E0E0 */
+    --muted: 0 0% 18%; /* #2A2A2A */
+    --muted-foreground: 0 0% 62%; /* #A0A0A0 */
+    --card: 0 0% 12%; /* #1E1E1E */
+    --card-foreground: 0 0% 94%;
+    --popover: 0 0% 10%; /* #1A1A1A */
+    --popover-foreground: 0 0% 94%;
+    --border: 0 0% 20%; /* #333333 */
+    --input: 0 0% 20%; /* #333333 */
+
+    /* === BRAND COLORS === */
+    --primary: 253 91% 58%; /* #5D32F5 */
+    --primary-foreground: 0 0% 10%; /* #1A1A1A */
+    --secondary: 210 10% 24%; /* #3A3A3A */
+    --secondary-foreground: 0 0% 98%;
+    --accent: 180 100% 40%; /* #00BCD4 */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 70% 50%; /* #F44336 */
+    --destructive-foreground: 0 85% 97%;
+    --ring: 142 40% 40%;
+
+    /* === CHART COLORS === */
+    --chart-1: 142 48% 47%; /* Revenus */
+    --chart-2: 0 85% 50%;   /* Dépenses */
+    --chart-3: 207 90% 54%; /* Épargne */
+    --chart-4: 292 39% 50%; /* Investissements */
+    --chart-5: 35 100% 55%; /* Alertes (orange) */
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', sans-serif;
+  }
+}
