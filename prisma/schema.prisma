@@ -7,7 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model BL_Home {
+  id   String @id @default(cuid())
+  name String
+
+  users    BL_User[]
+  expenses BL_Expense[]
+}
+
+model BL_User {
   id            String    @id @default(cuid())
   email         String    @unique
   password      String?
@@ -15,11 +23,36 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  accounts      Account[]
-  sessions      Session[]
+
+  homeId   String?
+  home     BL_Home?     @relation(fields: [homeId], references: [id])
+  accounts BL_Account[]
+  sessions BL_Session[]
+  expenses BL_Expense[]
 }
 
-model Account {
+model BL_Expense {
+  id        String   @id @default(cuid())
+  name      String
+  amount    Int
+  date      DateTime
+  is_repeat Boolean
+
+  userId String
+  user   BL_User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  typeId String
+  type   BL_Type  @relation(fields: [typeId], references: [id], onDelete: Cascade)
+  homeId String?
+  home   BL_Home? @relation(fields: [homeId], references: [id], onDelete: Cascade)
+}
+
+model BL_Type {
+  id       String       @id @default(cuid())
+  name     String       @unique
+  expenses BL_Expense[]
+}
+
+model BL_Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
@@ -33,20 +66,21 @@ model Account {
   id_token          String? @db.Text
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user BL_User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
-model Session {
+model BL_Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user BL_User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model VerificationToken {
+model BL_VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
